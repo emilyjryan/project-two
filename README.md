@@ -18,7 +18,7 @@ I want to create an app that tells you sunset time, moonphase, and weather, all 
 4. 
 
 ## ERDS:
-(See ERD.drawio)
+![ERDs](./ERDs.png "ERDs")
 
 ## RESTFUL ROUTING CHART
 GET == / == Read homepage
