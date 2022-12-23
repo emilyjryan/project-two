@@ -24,16 +24,7 @@ I want to create an app that will allow users to look up specific drugs to get t
 
 ## RESTFUL ROUTING CHART
 
-GET == / == Read homepage
-GET == /sunset == Get sunset data from API and display for user
-POST == /users/new == Create new user
-GET == /users/:userId/ Read user's profile and info
-PUT == /users/:userId == Update user's password
-DELETE == /users/:userId == Delete user's account
-GET == /users/:userId/faves == Read a user's saved locations
-GET == /users/:userId/faves/:favId == Read details on specific fav
-POST == /users/:userId/faves/:favId == Create a new fav
-DELETE == /users/:userId/faves:favId == Delete a fav
+![Restful routing](./methods.png "Restful routing")
 
 <hr>
 
