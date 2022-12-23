@@ -1,39 +1,39 @@
-# Don't Do Drugz
+# DiscoverDrug
 
-## PROJECT IDEA
+### Project Idea
 An app that will allow users to look up details of any medication they search for and save their favorites to see again in the future. The app will also include the ability to leave comments based on side effects experienced.
 
 <hr>
 
-## PROJECT DESCRIPTION
+### Project Description
 I want to create an app that will allow users to look up specific drugs to get their generic and brand names as well as route and administration instructions. Users will be able to make a profile with an email and password and then they can save different drugs that they may want to return to in the future. I also want users to have the ability to comment on the drugs database with side effects they've experienced so other users can be aware.
 
 <hr>
 
-## CHOICE OF API:
+### Choice of API:
 1. base endpoint: https://api.fda.gov/drug/drugsfda.json
     - 120,000 requests per day
 ![API proof](./fda_api_screenshot.png "API Proof")
 
 <hr>
 
-## ERDS:
+### ERDs:
 ![ERDs](./ERDs.png "ERDs")
 
 <hr>
 
-## RESTFUL ROUTING CHART
+### RESTful Routing Chart:
 
 ![Restful routing](./methods.png "Restful routing")
 
 <hr>
 
-## WIREFRAMES
+### Wireframes
 ![wireframes from Miro](./whiteboard.png "Wireframes")
 
 <hr>
 
-## USER STORIES
+### User Stories
 * As a user, I want to look up a drug I'm curious about and get information on it.
 * As a user, I want to save different drugs I've searched in a favorites list for easy reference.
 * As a user, I want to create an account with email and password.
