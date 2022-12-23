@@ -12,6 +12,7 @@ I want to create an app that will allow users to look up specific drugs to get t
 
 ### Choice of API:
 1. base endpoint: https://api.fda.gov/drug/drugsfda.json
+    - API: '##################' (in .env file)
     - 120,000 requests per day
 ![API proof](./fda_api_screenshot.png "API Proof")
 
