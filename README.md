@@ -43,17 +43,22 @@ I want to create an app that will allow users to look up specific drugs to get t
 
 <hr>
 
-## GOALS
+### GOALS
 
-### MVP Goals:
+#### MVP Goals:
 - User can sign up for account using email and password
 - User can change password or update email address
 - User can search drug by name (generic or trade) and have requested information returned
 - User can save their searches in "favorites" for future use
 - User can comment on a given drug regarding side effects (or other comments about the drug)
 
-### Stretch Goals:
+#### Stretch Goals:
 - Incorporate ability for drug dosage to be returned in weight-based dosing format for pediatric dosing
 - Add ability to search symptoms and be given potential diagnosis (possibly including another API)
 
-
+### Resources:
+Tech Stack Used:
+- HTML
+- CSS
+- Javascript (Vanilla)
+- Bootstrap
