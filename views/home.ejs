@@ -1,5 +1,21 @@
 <%-include('partials/header.ejs', { user}) %>
 
-<h2>Welcome Home, User</h2>
+<br>
+<% if (user) { %>
+<h2>Welcome back, <% user %>!</h2>
+<% } else { %> 
+<h2>Welcome to the site!</h2>
+    <% } %> 
+<h6>
+    Here at DiscoverDrug you have the ability to look up any medication you may have questions on and get loads of data, including brand and generic names, clinical indications, side effects, routes, administration instructions, and dosing guidelines. The 'favorites' function allows you to save a drug to your favorites list for easy referencing in the future. You can also comment on any drug, noting specific side effects or other comments.
+</h6>
+<br>
+<h5>Let's get started...</h5>
+<br>
+<form method="GET" action="/drugs/results">
+<label for="drug-search">Search for a drug:</label>
+<input id="drug-search" placeholder="Type a drug name" name="drug">
+<button type="submit">Search</button>
+</form>
 
 <%-include('partials/footer.ejs') %>

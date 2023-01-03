@@ -1,0 +1,23 @@
+<%-include('partials/header.ejs', { user}) %>
+
+<br>
+<h3>Search Results for <%=drug%>:</h3>
+
+<% results.forEach(drug => { %>
+    <div>
+        <h2>Name: <%=drug.openfda.brand_name%> </h2>
+        <!-- <p>Generic name: <%=drug.openfda.generic_name%></p>
+        <p>Route: <%=drug.openfda.route%></p>
+        <p>Typical dosage: <%=drug.openfda.dosage_and_administration%></p>
+        <p>Active ingredients: <%=drug.activeIngredients%></p>
+        <p>Strength: <%=drug.strength%></p> -->
+</div>
+<%})%>
+
+<% if (user) { %>
+<!-- add favorite button -->
+<% } else { %> 
+<!-- no fav button -->
+    <% } %> 
+
+<%-include('partials/footer.ejs') %>

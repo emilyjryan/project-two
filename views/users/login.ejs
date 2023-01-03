@@ -1,11 +1,12 @@
 <%-include('../partials/header.ejs') %>
 
-<h3>Log in to your account</h3>
+<br>
+<h3 class>Log in to your account</h3>
 
 <% if (message) { %>
     <p><%=message%></p>
 <% } %>
-
+<br>
 <form action="/users/login" method="POST">
     <label for="email">Email:</label>
     <input id="email" type="email" name="email" required/>

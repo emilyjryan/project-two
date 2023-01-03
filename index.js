@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const db = require('./models')
+// const axios = require('axios')
 const crypto = require('crypto-js')
 
 // app config
@@ -50,7 +51,7 @@ app.use((req,res,next) => {
     next()
 })
 
-// routes and controllers
+// routes
 app.get('/', (req,res) => {
     console.log(res.locals.user)
     res.render('home.ejs', {
@@ -60,6 +61,8 @@ app.get('/', (req,res) => {
 
 // controllers
 app.use('/users', require('./controllers/users'))
+app.use('/drugs', require('./controllers/drugs'))
+
 
 // listen on a port
 app.listen(PORT, () => {
