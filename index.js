@@ -59,6 +59,49 @@ app.get('/', (req,res) => {
     })
 })
 
+////// FAVORITES //////
+
+// GET /favorites -- READ all faves from DB
+app.get('/favorites', async (req, res) => {
+    try {
+      const allFaves = await db.favorite.findAll()
+      res.render('/views/users/faves.ejs', {
+        allFaves: allFaves
+      })
+    } catch (err) {
+      console.log('annoying', err)
+      res.status(500).send('api error')
+    }
+  })
+  
+  // POST /favorites -- CREATE a new fave in the DB
+  app.post('/favorites', async (req, res) => {
+    try {
+      //create a new fave in the DB
+      const [fave, create] = await db.favorite.findOrCreate({
+        where: {
+          brand_name: req.body.brand_name,
+        },
+        defaults: {
+            generic_name: req.body.generic_name,
+            route: req.body.route,
+            active_ingredient: req.body.active_ingredient,
+            dosage: req.body.dosage,
+            indications_and_usage: req.body.indications_and_usage,
+            caution: req.body.caution,
+            ask_doctor: req.body.ask_doctor,
+            api_id: req.body.api_id
+        }
+      })
+  
+      // redirect to /favorites to show the user their faves
+      res.redirect('/favorites')
+    } catch (err) {
+      console.log('annoying', err)
+      res.status(500).send('api error')
+    }
+  })
+
 // controllers
 app.use('/users', require('./controllers/users'))
 app.use('/drugs', require('./controllers/drugs'))

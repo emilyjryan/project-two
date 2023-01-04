@@ -1,0 +1,41 @@
+install sequelize:
+- RUN npm i pg sequelize
+- RUN sequelize init
+- check out config and update, change database name
+- RUN sequelize db:create
+
+create a model:
+
+- user model
+    has many drugs
+    has many comments
+    belongs to drugs THROUGH users_drugs
+
+- RUN sequelize model:create --name drug --attributes brand_name:string,generic_name:string,route:string,active_ingredient:string,dosage:string,indications_and_usage:string,caution:string,ask_doctor:string
+
+    has many users
+    has many comments
+    belongs to THROUGH users_drugs
+
+- RUN sequelize model:create --name users_drugs --attributes userId:integer,drugId:integer
+
+- RUN sequelize model:create --name comment --attributes userId:integer,drugId:integer,content:string
+    belongs to user
+    belongs to drug
+
+- make sure everything looks good
+- RUN sequelize db:migrate
+
+routes:
+- create GET route to READ all faves
+- create POST route to CREATE a fave
+
+add a hidden input bar for the title and imdbID but only show the button 'add to faves'
+
+require axios and models folder in main js file
+
+
+
+
+
+
