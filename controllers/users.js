@@ -67,7 +67,7 @@ router.post('/login', async (req,res) => {
             }
         })
         //boilerplate msg if login fails
-        const badCredentialsMessage = 'username or password incorrect'
+        const badCredentialsMessage = 'Sorry, but your username or password is incorrect!'
         if (!user) {
             // if user isn't found in the db
             res.redirect('/users/login?message=' + badCredentialsMessage)

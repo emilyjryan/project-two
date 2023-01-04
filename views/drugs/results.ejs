@@ -1,23 +1,32 @@
-<%-include('partials/header.ejs', { user}) %>
+<%-include('../partials/header.ejs', { user}) %>
 
 <br>
-<h3>Search Results for <%=drug%>:</h3>
+<h3 class="ms-1">Search results for '<%=drug%>':</h3>
 
 <% results.forEach(drug => { %>
-    <div>
-        <h2>Name: <%=drug.openfda.brand_name%> </h2>
-        <!-- <p>Generic name: <%=drug.openfda.generic_name%></p>
-        <p>Route: <%=drug.openfda.route%></p>
-        <p>Typical dosage: <%=drug.openfda.dosage_and_administration%></p>
-        <p>Active ingredients: <%=drug.activeIngredients%></p>
-        <p>Strength: <%=drug.strength%></p> -->
-</div>
-<%})%>
-
+    <br>
+    <div class="ms-4">
+        <h2><strong>Name: </strong><%=drug.openfda.brand_name%></h2>
+        <p><strong>Generic name: </strong><%=drug.openfda.generic_name%></p>
+        <p><strong>Route: </strong><%=drug.openfda.route%></p>
+        <p><strong>Active ingredients: </strong><%=drug.active_ingredient%></p>
+        <p><strong>Typical dosage: </strong><%=drug.dosage_and_administration%></p>
+        <p><strong>Indications and Usage: </strong><%=drug.indications_and_usage%></p>
+        <p><strong>! CAUTION ! </strong><%=drug.do_not_use%></p>
+        <p>! <%=drug.ask_doctor%> </p>
+        
 <% if (user) { %>
-<!-- add favorite button -->
+    <form method="POST" action="/faves">
+        <input hidden type="text" value="<%=film.Title%>" name="title"/>
+        <input hidden type="text" value="<%=film.imdbID%>" name="imdbID"/>
+        <button type="submit">Add to my faves</button>
+    </form>
 <% } else { %> 
 <!-- no fav button -->
-    <% } %> 
+<% } %> 
 
-<%-include('partials/footer.ejs') %>
+</div>
+<%})%>
+<br>
+
+<%-include('../partials/footer.ejs') %>

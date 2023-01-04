@@ -14,16 +14,11 @@ router.get('/results', async (req,res) => {
     const drugsUrl = `https://api.fda.gov/drug/label.json?search=openfda.brand_name:${input}&limit=4`
   // Use request to call the API
     const response = await axios.get(drugsUrl)
-    console.log(response.data.Search)
-    res.json(response.data)
-    res.render('drugs/results.ejs', {
-      results: response.data.results
-    //   brandName: response.data.results[0].openfda.brand_name,
-    //   genericName: response.data.results[0].openfda.generic,
-    //   route: response.data.results[0].openfda.route,
-    //   dosage: response.data.results[0].dosage_and_administration,
-    //   activeIngredients: response.data.results[0].products.active_ingredients.name,
-    //   strength: response.data.results[0].products.active_ingredients.strength
+    console.log(response.data)
+    // res.json(response.data)
+    res.render('./drugs/results.ejs', {
+      results: response.data.results,
+      drug: req.query.drug
     })
     user: res.locals.user
   } catch(error) {

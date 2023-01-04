@@ -1,8 +1,8 @@
 <%-include('partials/header.ejs', { user}) %>
-
+<div class="ms-4">
 <br>
 <% if (user) { %>
-<h2>Welcome back, <% user %>!</h2>
+<h2>Welcome back, <% user.email %>!</h2>
 <% } else { %> 
 <h2>Welcome to the site!</h2>
     <% } %> 
@@ -17,5 +17,6 @@
 <input id="drug-search" placeholder="Type a drug name" name="drug">
 <button type="submit">Search</button>
 </form>
+</div>
 
 <%-include('partials/footer.ejs') %>
