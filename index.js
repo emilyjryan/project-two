@@ -65,7 +65,7 @@ app.get('/', (req,res) => {
 app.get('/favorites', async (req, res) => {
     try {
       const allFaves = await db.drug.findAll()
-      res.render('/views/users/faves.ejs', {
+      res.render('faves.ejs', {
         allFaves: allFaves
       })
     } catch (err) {
@@ -95,13 +95,7 @@ app.get('/favorites', async (req, res) => {
     
       })
       console.log(fave)
-
-      const [users_drugs_new, makeNew] = await db.users_drugs.findOrCreate({
-        where: {
-            drugId: fave.id,
-            userId: res.locals.userId
-        }
-      })
+      await fave.addUser(res.locals.user)
   
       // redirect to /favorites to show the user their faves
       res.redirect('/favorites')

@@ -1,0 +1,13 @@
+<%-include('./partials/header.ejs', { user}) %>
+
+<br>
+<h3 class="ms-2">My favorites:</h3>
+
+<div class="ms-4">
+<ul>
+<% allFaves.forEach(fave => { %>
+    <li><a href="/drugs/<%=fave.api_id %>"><%=fave.brand_name%></a></li>
+<%})%>
+</div>
+
+<%-include('./partials/footer.ejs') %>

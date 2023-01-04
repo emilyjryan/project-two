@@ -26,6 +26,9 @@ create a model:
 - make sure everything looks good
 - RUN sequelize db:migrate
 
+sequelize db:migrate:undo:all 
+update models and migrations
+
 routes:
 - create GET route to READ all faves
 - create POST route to CREATE a fave
