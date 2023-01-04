@@ -12,7 +12,7 @@
         <p>! <%=drug.ask_doctor%> </p>
 
         <% if (user) { %>
-            <form method="POST" action="/faves">
+            <form method="POST" action="/favorites">
                 <input hidden type="text" value="<%=drug.openfda.brand_name%>" name="brand_name"/>
                 <input hidden type="text" value="<%=drug.openfda.generic_name%>" name="generic_name"/>
                 <input hidden type="text" value="<%=drug.openfda.route%>" name="route"/>
@@ -29,5 +29,7 @@
         <!-- no fav button -->
         <% } %>
     </div>
+
+
 
 <%-include('../partials/footer.ejs') %>

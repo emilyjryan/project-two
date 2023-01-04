@@ -11,7 +11,7 @@ create a model:
     has many comments
     belongs to drugs THROUGH users_drugs
 
-- RUN sequelize model:create --name drug --attributes brand_name:string,generic_name:string,route:string,active_ingredient:string,dosage:string,indications_and_usage:string,caution:string,ask_doctor:string
+- RUN sequelize model:create --name drug --attributes brand_name:string,generic_name:string,route:string,active_ingredient:string,dosage:string,indications_and_usage:string,caution:string,ask_doctor:string,api_id:string
 
     has many users
     has many comments

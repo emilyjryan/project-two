@@ -64,7 +64,7 @@ app.get('/', (req,res) => {
 // GET /favorites -- READ all faves from DB
 app.get('/favorites', async (req, res) => {
     try {
-      const allFaves = await db.favorite.findAll()
+      const allFaves = await db.drug.findAll()
       res.render('/views/users/faves.ejs', {
         allFaves: allFaves
       })
@@ -78,7 +78,7 @@ app.get('/favorites', async (req, res) => {
   app.post('/favorites', async (req, res) => {
     try {
       //create a new fave in the DB
-      const [fave, create] = await db.favorite.findOrCreate({
+      const [fave, create] = await db.drug.findOrCreate({
         where: {
           brand_name: req.body.brand_name,
         },
@@ -91,6 +91,15 @@ app.get('/favorites', async (req, res) => {
             caution: req.body.caution,
             ask_doctor: req.body.ask_doctor,
             api_id: req.body.api_id
+        }
+    
+      })
+      console.log(fave)
+
+      const [users_drugs_new, makeNew] = await db.users_drugs.findOrCreate({
+        where: {
+            drugId: fave.id,
+            userId: res.locals.userId
         }
       })
   
