@@ -5,9 +5,11 @@ const cookieParser = require('cookie-parser')
 const db = require('./models')
 // const axios = require('axios')
 const crypto = require('crypto-js')
+const methodOverride = require('method-override')
 
 // app config
 const app = express()
+app.use(methodOverride('_method'))
 const PORT = process.env.PORT || 8200
 app.set('view engine', 'ejs')
 
@@ -64,26 +66,28 @@ app.get('/', (req,res) => {
 
 // ===== FAVORITES ===== //
 
-// GET /favorites -- READ all faves from DB
-app.get('/favorites', async (req, res) => {
+// GET /users/drugs -- READ all faves from DB
+app.get('/users/drugs', async (req, res) => {
     try {
-      const allFaves = await db.drug.findAll()
+      const user = await db.user.findByPk(res.locals.user.id)
+        const allFaves = await user.getDrugs()
+      // res.send(allFaves)
       res.render('faves.ejs', {
         allFaves: allFaves
       })
     } catch (err) {
-      console.log('annoying', err)
+      console.log('error in the get users/drugs route', err)
       res.status(500).send('api error')
     }
   })
   
-// POST /favorites -- CREATE a new fave in the DB
-app.post('/favorites', async (req, res) => {
+// POST /users/drugs -- CREATE a new fave in the DB
+app.post('/users/drugs', async (req, res) => {
     try {
       //create a new fave in the DB
       const [fave, create] = await db.drug.findOrCreate({
         where: {
-          brand_name: req.body.brand_name,
+          brand_name: req.body.brand_name
         },
         defaults: {
             generic_name: req.body.generic_name,
@@ -94,53 +98,73 @@ app.post('/favorites', async (req, res) => {
             caution: req.body.caution,
             ask_doctor: req.body.ask_doctor,
             api_id: req.body.api_id
-        }
-    
-      })
-      console.log(fave)
-      await fave.addUser(res.locals.user)
-  
-      // redirect to /favorites to show the user their faves
-      res.redirect('/favorites')
+        },
+    })
+    await fave.addUser(res.locals.user.id)
+      res.redirect('/')
     } catch (err) {
-      console.log('annoying', err)
+      console.log('error in the post to favorites route', err)
       res.status(500).send('api error')
     }
   })
+
+  // DELETE a favorite drug
+app.delete('/favorites', async (req,res) => {
+  try {
+    const user = await db.user.findByPk(res.locals.user.id)
+    const drug = await db.drug.findByPk(req.body.drugId)
+    await user.removeDrugs(drug)
+  } catch (error) {
+    res.send('delete favorites route error' + error)
+  console.log(error)
+ } 
+ res.redirect('/favorites')
+})
+
+ // PUT/Change the nickname of a favorite drug
+ app.patch('/favorites', async (req,res) => {
+  try {
+    const user = await db.user.findByPk(res.locals.user.id)
+    const drug = await db.drug.findByPk(req.body.drugId)
+    drug.nickname = req.body.nickname
+    await drug.save()
+    console.log(drug.nickname)
+    res.redirect('/favorites')
+  } catch (error) {
+    res.send('error in put/nickname favorites route' + error)
+  console.log(error)
+ } 
+})
+
+
 
 
 // ===== COMMENTS ===== //
 
  // POST /drugs/:drug.api_id -- CREATE a comment on a specific drug
- app.post('/drugs/:api_id', async (req, res) => {
-    try {
-      //create a new comment on a specific drugB
-      const [newComment, post] = await db.drug.findOrCreate({
-        where: {
-          brand_name: req.body.brand_name,
-        },
-        defaults: {
-            generic_name: req.body.generic_name,
-            route: req.body.route,
-            active_ingredient: req.body.active_ingredient,
-            dosage: req.body.dosage,
-            indications_and_usage: req.body.indications_and_usage,
-            caution: req.body.caution,
-            ask_doctor: req.body.ask_doctor,
-            api_id: req.body.api_id
-        }
-    
-      })
-      console.log(fave)
-      await fave.addUser(res.locals.user)
+
+/////// STILL NEEDS WORKS ////////
+
+//  app.post('/drugs/:api_id', async (req, res) => {
+//     try {
+//       //create a new comment on a specific drugB
+//       const [newComment, post] = await db.comment.findOrCreate({
+//         where: {
+//           comment: req.body.comment,
+//           userId: USERID,
+//           drugId: DRUGID,
+//         },
+//       })
+//       console.log(fave)
+//       await fave.addUser(res.locals.user)
   
-      // redirect to /favorites to show the user their faves
-      res.redirect('/favorites')
-    } catch (err) {
-      console.log('annoying', err)
-      res.status(500).send('api error')
-    }
-  })
+//       // redirect to /favorites to show the user their faves
+//       res.redirect('/favorites')
+//     } catch (err) {
+//       console.log('annoying', err)
+//       res.status(500).send('api error')
+//     }
+//   })
 
 
 // ===== CONTROLLERS ===== //

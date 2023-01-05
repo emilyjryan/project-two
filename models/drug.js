@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   drug.init({
+    nickname: DataTypes.STRING,
     brand_name: DataTypes.STRING,
     generic_name: DataTypes.STRING,
     route: DataTypes.STRING,

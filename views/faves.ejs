@@ -5,12 +5,30 @@
 
 <div class="ms-4">
 
-<!-- TO DO: render only the faves from that specific user -->
-
 <ul>
 <% allFaves.forEach(fave => { %>
-    <li><a href="/drugs/<%=fave.api_id %>"><%=fave.brand_name%></a></li>
-<%})%>
+    <% if (fave.nickname) { %>
+    <li>"<%=fave.nickname%>"
+    <br>
+    <a href="/drugs/<%=fave.api_id %>"><%=fave.brand_name%></a></li>
+   <% } else { %>
+    <li><a href="/drugs/<%=fave.api_id %>"><%=fave.brand_name%></a></li> 
+   <%}%>
+    <!-- DELETE BUTTON -->
+    <form method="POST" action="/favorites/?_method=DELETE">
+        <button type="submit" value="<%=fave.id%>" name="drugId">Delete</button>
+    </form>
+    
+     <!-- EDIT BUTTON -->
+     <% if (! fave.nickname) { %>
+     <form method="POST" action="/favorites/?_method=PUT">
+        <label for="type">Nickname:</label>
+        <input hidden value="<%=fave.id%>" name="drugId">
+        <input id="type" type="text" value="<%=fave.nickname%>" name="nickname">
+        <button type="submit">Save</button>
+    </form>
+        <% } %>    
+    <%})%>
 </div>
 
 <%-include('./partials/footer.ejs') %>

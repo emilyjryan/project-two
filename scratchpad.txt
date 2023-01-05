@@ -26,19 +26,54 @@ create a model:
 - make sure everything looks good
 - RUN sequelize db:migrate
 
-sequelize db:migrate:undo:all 
-update models and migrations
-
-routes:
-- create GET route to READ all faves
-- create POST route to CREATE a fave
-
-add a hidden input bar for the title and imdbID but only show the button 'add to faves'
-
-require axios and models folder in main js file
+Edit database:
+- sequelize db:migrate:undo:all 
+- update models and migrations
+- make sure everything looks good
+- RUN sequelize db:migrate
 
 
+STILL TO DO:
+- Comments
+- ✅ add nickname key/value to drug model
+- ✅ fix DELETE route
+- UPDATE/PUT a nickname
+- ✅ Render only faves belonging to specific user that is logged in
+- Styling
+
+QUESTIONS:
+- how to PUT the nickname?
+- where vs. defaults in findOrCreate
 
 
+ <!-- Comments input box for users logged in -->
+        <% if (user) { %>
+        <h4>Comments:</h4>
 
+       <% if (drug.comments) { %>
+            <p>No comments yet!</p>
+       <% } else { %>
+        <% drug.comments.forEach(function(comment) { %>
+            <p><%= comment.userId %> says:</p>
+            <p><%= comment.content %></p>
+         <% }) %>
 
+         <h5>Leave a comment as <%=user.email%>:</h5>
+            <form method="POST" action="/drugs/<%=drug.api_id%>/comment">
+                <input hidden type="text" value="<%=user.id%>" name="userId"/>
+                <input hidden type="text" value="<%=drug.api_id%>" name="drugId"/>
+                <input type="text" value="#" name="#"/>
+                <button type="submit">Submit</button>
+            </form> 
+            <br>
+        <% } else { %>
+
+        <%} } %>
+
+  <!-- EDIT BUTTON -->
+    <form method="POST" action="/drugs/<%=fave.api_id%>/?_method=PUT">
+        <label for="type">Nickname:</label>
+        <input id="type" type="text" value="<%=fave.nickname%>" name="nickname">
+        
+        <button type="submit">Save</button>
+    </form>
