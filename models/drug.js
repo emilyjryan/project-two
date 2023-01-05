@@ -11,17 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.drug.belongsToMany(models.user, {through: "users_drugs"})
+      models.drug.hasMany(models.comment)
     }
   }
   drug.init({
     brand_name: DataTypes.STRING,
     generic_name: DataTypes.STRING,
     route: DataTypes.STRING,
-    active_ingredient: DataTypes.STRING,
-    dosage: DataTypes.STRING,
-    indications_and_usage: DataTypes.STRING,
-    caution: DataTypes.STRING,
-    ask_doctor: DataTypes.STRING,
+    active_ingredient: DataTypes.TEXT,
+    dosage: DataTypes.TEXT,
+    indications_and_usage: DataTypes.TEXT,
+    caution: DataTypes.TEXT,
+    ask_doctor: DataTypes.TEXT,
     api_id: DataTypes.STRING
   }, {
     sequelize,

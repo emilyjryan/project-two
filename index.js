@@ -51,7 +51,10 @@ app.use((req,res,next) => {
     next()
 })
 
-// routes
+// ===== /// ===== ROUTES ===== /// ===== //
+
+// ===== HOME ===== //
+
 app.get('/', (req,res) => {
     console.log(res.locals.user)
     res.render('home.ejs', {
@@ -59,7 +62,7 @@ app.get('/', (req,res) => {
     })
 })
 
-////// FAVORITES //////
+// ===== FAVORITES ===== //
 
 // GET /favorites -- READ all faves from DB
 app.get('/favorites', async (req, res) => {
@@ -74,8 +77,8 @@ app.get('/favorites', async (req, res) => {
     }
   })
   
-  // POST /favorites -- CREATE a new fave in the DB
-  app.post('/favorites', async (req, res) => {
+// POST /favorites -- CREATE a new fave in the DB
+app.post('/favorites', async (req, res) => {
     try {
       //create a new fave in the DB
       const [fave, create] = await db.drug.findOrCreate({
@@ -105,12 +108,49 @@ app.get('/favorites', async (req, res) => {
     }
   })
 
-// controllers
+
+// ===== COMMENTS ===== //
+
+ // POST /drugs/:drug.api_id -- CREATE a comment on a specific drug
+ app.post('/drugs/:api_id', async (req, res) => {
+    try {
+      //create a new comment on a specific drugB
+      const [newComment, post] = await db.drug.findOrCreate({
+        where: {
+          brand_name: req.body.brand_name,
+        },
+        defaults: {
+            generic_name: req.body.generic_name,
+            route: req.body.route,
+            active_ingredient: req.body.active_ingredient,
+            dosage: req.body.dosage,
+            indications_and_usage: req.body.indications_and_usage,
+            caution: req.body.caution,
+            ask_doctor: req.body.ask_doctor,
+            api_id: req.body.api_id
+        }
+    
+      })
+      console.log(fave)
+      await fave.addUser(res.locals.user)
+  
+      // redirect to /favorites to show the user their faves
+      res.redirect('/favorites')
+    } catch (err) {
+      console.log('annoying', err)
+      res.status(500).send('api error')
+    }
+  })
+
+
+// ===== CONTROLLERS ===== //
+
 app.use('/users', require('./controllers/users'))
 app.use('/drugs', require('./controllers/drugs'))
 
 
-// listen on a port
+// ===== PORT ===== //
+
 app.listen(PORT, () => {
     console.log(`authenticating users on PORT ${PORT} 🔐`)
 })

@@ -19,19 +19,19 @@ module.exports = {
         type: Sequelize.STRING
       },
       active_ingredient: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       dosage: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       indications_and_usage: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       caution: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       ask_doctor: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       api_id: {
         type: Sequelize.STRING

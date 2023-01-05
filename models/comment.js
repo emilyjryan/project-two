@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.comment.belongsTo(models.drug)
+      models.comment.belongsTo(models.user)
     }
   }
   comment.init({
     userId: DataTypes.INTEGER,
     drugId: DataTypes.INTEGER,
-    content: DataTypes.STRING
+    content: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'comment',

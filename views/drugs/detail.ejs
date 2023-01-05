@@ -8,9 +8,10 @@
         <p><strong>Active ingredients: </strong><%=drug.active_ingredient%></p>
         <p><strong>Typical dosage: </strong><%=drug.dosage_and_administration%></p>
         <p><strong>Indications and Usage: </strong><%=drug.indications_and_usage%></p>
-        <p><strong>! CAUTION ! </strong><%=drug.do_not_use%></p>
-        <p>! <%=drug.ask_doctor%> </p>
+        <p><strong class="text-danger"> ‼️ ⛔️ CAUTION ⛔️ !! </strong><%=drug.do_not_use%>. <%=drug.ask_doctor%>.</p>
 
+
+        <!-- Favorites button for logged in users -->
         <% if (user) { %>
             <form method="POST" action="/favorites">
                 <input hidden type="text" value="<%=drug.openfda.brand_name%>" name="brand_name"/>
@@ -28,8 +29,24 @@
         <% } else { %> 
         <!-- no fav button -->
         <% } %>
+
+        <!-- Comments input box for users logged in -->
+        <% if (user) { %>
+            <form method="POST" action="/drugs/:drug.api_id">
+                <input hidden type="text" value="<%=drug.openfda.brand_name%>" name="brand_name"/>
+                <input hidden type="text" value="<%=drug.openfda.generic_name%>" name="generic_name"/>
+                <input hidden type="text" value="<%=drug.openfda.route%>" name="route"/>
+                <input hidden type="text" value="<%=drug.active_ingredient%>" name="active_ingredient"/>
+                <input hidden type="text" value="<%=drug.dosage_and_administration%>" name="dosage"/>
+                <input hidden type="text" value="<%=drug.indications_and_usage%>" name="indications_and_usage"/>
+                <input hidden type="text" value="<%=drug.do_not_use%>" name="caution"/>
+                <input hidden type="text" value="<%=drug.ask_doctor%>" name="ask_doctor"/>
+                <input hidden type="text" value="<%=drug.id%>" name="api_id"/>
+                <button type="submit">Add to my favorites</button>
+            </form> 
+        <% } else { %> 
+        <!-- no fav button -->
+        <% } %>
     </div>
-
-
 
 <%-include('../partials/footer.ejs') %>
