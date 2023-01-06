@@ -34,16 +34,17 @@ Edit database:
 
 
 STILL TO DO:
-- Comments
+- ✅ Comments
 - ✅ add nickname key/value to drug model
 - ✅ fix DELETE route
-- ✅UPDATE/PUT a nickname
-- ✅ Render only faves belonging to specific user that is logged in
+- ✅ UPDATE/PUT a nickname
+- ✅ Render only faves belonging to specific user
 - Styling
 - rework routes semantics
 - conditional rendering for each attribute on details page
 - search bar within favs?
 - navigation buttons on each page
+- add time stamp for comments
 
 QUESTIONS:
 - how to PUT the nickname?

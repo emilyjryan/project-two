@@ -77,7 +77,6 @@ app.get('/favorites', async (req, res) => {
           ]
         }]
       })
-        console.log(allFaves[1].comments)
       // res.send(allFaves)
       res.render('faves.ejs', {
         allFaves: allFaves,

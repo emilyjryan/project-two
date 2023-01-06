@@ -1,57 +1,47 @@
 <%-include('./partials/header.ejs', { user}) %>
+<h3 class="text-center bg-warning p-2">My favorites:</h3>
 
-<br>
-<h3 class="ms-2">My favorites:</h3>
+<div class="vh-min-100 d-flex flex-wrap justify-content-around">
 
-<div class="ms-4">
-
-<ul>
 <% allFaves.forEach(drug => { %>
-    <% if (drug.nickname) { %>
-    <li>Nickname: "<%=drug.nickname%>"
-    <br>
-    <a href="/drugs/<%=drug.api_id %>"><%=drug.brand_name%></a></li>
-   <% } else { %>
-    <li><a href="/drugs/<%=drug.api_id %>"><%=drug.brand_name%></a></li> 
-   <%}%>
-    <!-- DELETE BUTTON -->
-    <form method="POST" action="/favorites/?_method=DELETE">
-        <button type="submit" value="<%=drug.id%>" name="drugId">Delete</button>
-    </form>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title bg-info p-4"><a class="text-light" href="/drugs/<%=drug.api_id %>"><%=drug.brand_name%></a></h5>
+          <% if (drug.nickname) { %>
+          <h6 class="card-subtitle mb-2 text-muted">Nickname: "<%=drug.nickname%>"</h6> <%}%>
+
+        <form class="card-link" method="POST" action="/favorites/?_method=DELETE">
+            <button class="btn btn-outline-danger" type="submit" value="<%=drug.id%>" name="drugId">Delete</button>
+        </form>
+
+        <% if (! drug.nickname) { %>
+            <form method="POST" action="/favorites/?_method=PUT">
+               <label for="type">Set nickname:</label>
+               <input hidden value="<%=drug.id%>" name="drugId">
+               <input id="type" type="text" value="<%=drug.nickname%>" name="nickname">
+               <button type="submit">Save</button>
+           </form> <%}%>
+           <div class="card-text">
+           <p><strong>Comments:</strong></p>
+           <% if (drug.comments.length == 0) { %>
+                <p>No comments yet!</p>
+           <% } else { %>
+            <% drug.dataValues.comments.forEach(function(comment) { %>
+                <p> <%=comment.user.email%> says:</p>
+                <p><%= comment.content %></p>
+             <% })} %>
     
-     <!-- EDIT BUTTON -->
-     <% if (! drug.nickname) { %>
-     <form method="POST" action="/favorites/?_method=PUT">
-        <label for="type">Set nickname:</label>
-        <input hidden value="<%=drug.id%>" name="drugId">
-        <input id="type" type="text" value="<%=drug.nickname%>" name="nickname">
-        <button type="submit">Save</button>
-    </form>
-        <% } %>    
-        <br>
-    
-    <!-- COMMENTS -->
+             <p><strong>Leave a comment:</strong></p>
+                <form method="POST" action="/favorites/comment">
+                    <input hidden type="text" value="<%=user.id%>" name="userId"/>
+                    <input hidden type="text" value="<%=drug.id%>" name="drugId"/>
+                    <input type="text" placeholder="Write your comment" name="content"/>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
 
-        <h5>Comments:</h5>
-
-
-       <% if (drug.comments.length == 0) { %>
-            <p>No comments yet!</p>
-       <% } else { %>
-        <% drug.dataValues.comments.forEach(function(comment) { %>
-            <p> <%=comment.user.email%> says:</p>
-            <p><%= comment.content %></p>
-         <% })} %>
-
-         <h6>Leave a comment:</h6>
-            <form method="POST" action="/favorites/comment">
-                <input hidden type="text" value="<%=user.id%>" name="userId"/>
-                <input hidden type="text" value="<%=drug.id%>" name="drugId"/>
-                <input type="text" placeholder="Write your comment" name="content"/>
-                <button type="submit">Submit</button>
-            </form> 
-            <br>
-    
+        </div>
+      </div>
         <%})%>
 </div>
 
