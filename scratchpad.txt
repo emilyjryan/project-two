@@ -37,9 +37,13 @@ STILL TO DO:
 - Comments
 - ✅ add nickname key/value to drug model
 - ✅ fix DELETE route
-- UPDATE/PUT a nickname
+- ✅UPDATE/PUT a nickname
 - ✅ Render only faves belonging to specific user that is logged in
 - Styling
+- rework routes semantics
+- conditional rendering for each attribute on details page
+- search bar within favs?
+- navigation buttons on each page
 
 QUESTIONS:
 - how to PUT the nickname?
@@ -50,7 +54,7 @@ QUESTIONS:
         <% if (user) { %>
         <h4>Comments:</h4>
 
-       <% if (drug.comments) { %>
+       <% if (! drug.comments) { %>
             <p>No comments yet!</p>
        <% } else { %>
         <% drug.comments.forEach(function(comment) { %>
@@ -70,10 +74,6 @@ QUESTIONS:
 
         <%} } %>
 
-  <!-- EDIT BUTTON -->
-    <form method="POST" action="/drugs/<%=fave.api_id%>/?_method=PUT">
-        <label for="type">Nickname:</label>
-        <input id="type" type="text" value="<%=fave.nickname%>" name="nickname">
-        
-        <button type="submit">Save</button>
-    </form>
+
+
+

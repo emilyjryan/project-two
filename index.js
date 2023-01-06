@@ -58,7 +58,6 @@ app.use((req,res,next) => {
 // ===== HOME ===== //
 
 app.get('/', (req,res) => {
-    console.log(res.locals.user)
     res.render('home.ejs', {
         user: res.locals.user
     })
@@ -67,22 +66,30 @@ app.get('/', (req,res) => {
 // ===== FAVORITES ===== //
 
 // GET /users/drugs -- READ all faves from DB
-app.get('/users/drugs', async (req, res) => {
+app.get('/favorites', async (req, res) => {
     try {
       const user = await db.user.findByPk(res.locals.user.id)
-        const allFaves = await user.getDrugs()
+      const allFaves = await user.getDrugs({
+        include: [{
+          model:db.comment,
+          include: [
+            db.user
+          ]
+        }]
+      })
+        console.log(allFaves[1].comments)
       // res.send(allFaves)
       res.render('faves.ejs', {
-        allFaves: allFaves
+        allFaves: allFaves,
       })
     } catch (err) {
-      console.log('error in the get users/drugs route', err)
+      console.log('error in the get favorites route', err)
       res.status(500).send('api error')
     }
   })
   
 // POST /users/drugs -- CREATE a new fave in the DB
-app.post('/users/drugs', async (req, res) => {
+app.post('/favorites', async (req, res) => {
     try {
       //create a new fave in the DB
       const [fave, create] = await db.drug.findOrCreate({
@@ -101,7 +108,7 @@ app.post('/users/drugs', async (req, res) => {
         },
     })
     await fave.addUser(res.locals.user.id)
-      res.redirect('/')
+      res.redirect('/favorites')
     } catch (err) {
       console.log('error in the post to favorites route', err)
       res.status(500).send('api error')
@@ -122,7 +129,7 @@ app.delete('/favorites', async (req,res) => {
 })
 
  // PUT/Change the nickname of a favorite drug
- app.patch('/favorites', async (req,res) => {
+ app.put('/favorites', async (req,res) => {
   try {
     const user = await db.user.findByPk(res.locals.user.id)
     const drug = await db.drug.findByPk(req.body.drugId)
@@ -136,35 +143,23 @@ app.delete('/favorites', async (req,res) => {
  } 
 })
 
-
-
-
 // ===== COMMENTS ===== //
 
- // POST /drugs/:drug.api_id -- CREATE a comment on a specific drug
-
-/////// STILL NEEDS WORKS ////////
-
-//  app.post('/drugs/:api_id', async (req, res) => {
-//     try {
-//       //create a new comment on a specific drugB
-//       const [newComment, post] = await db.comment.findOrCreate({
-//         where: {
-//           comment: req.body.comment,
-//           userId: USERID,
-//           drugId: DRUGID,
-//         },
-//       })
-//       console.log(fave)
-//       await fave.addUser(res.locals.user)
-  
-//       // redirect to /favorites to show the user their faves
-//       res.redirect('/favorites')
-//     } catch (err) {
-//       console.log('annoying', err)
-//       res.status(500).send('api error')
-//     }
-//   })
+ app.post('/favorites/comment', async (req, res) => {
+    try {
+      const [newComment, post] = await db.comment.findOrCreate({
+        where: {
+          content: req.body.content,
+          userId: req.body.userId,
+          drugId: req.body.drugId,
+        },
+      })
+      res.redirect('/favorites')
+    } catch (err) {
+      console.log('error in comment post route', err)
+      res.status(500).send('api error')
+    }
+  })
 
 
 // ===== CONTROLLERS ===== //
