@@ -51,30 +51,5 @@ QUESTIONS:
 - where vs. defaults in findOrCreate
 
 
- <!-- Comments input box for users logged in -->
-        <% if (user) { %>
-        <h4>Comments:</h4>
-
-       <% if (! drug.comments) { %>
-            <p>No comments yet!</p>
-       <% } else { %>
-        <% drug.comments.forEach(function(comment) { %>
-            <p><%= comment.userId %> says:</p>
-            <p><%= comment.content %></p>
-         <% }) %>
-
-         <h5>Leave a comment as <%=user.email%>:</h5>
-            <form method="POST" action="/drugs/<%=drug.api_id%>/comment">
-                <input hidden type="text" value="<%=user.id%>" name="userId"/>
-                <input hidden type="text" value="<%=drug.api_id%>" name="drugId"/>
-                <input type="text" value="#" name="#"/>
-                <button type="submit">Submit</button>
-            </form> 
-            <br>
-        <% } else { %>
-
-        <%} } %>
-
-
 
 
