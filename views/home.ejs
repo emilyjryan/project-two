@@ -1,5 +1,6 @@
 <%-include('partials/header.ejs', { user}) %>
-<div class="ms-4">
+<!-- <div class="bg-opacity-25" style="background-image: url(https://d2cbg94ubxgsnp.cloudfront.net/Pictures/2000xAny/1/5/2/503152_indexgettyimages488635735_358603.jpg); height:100vh;"> -->
+<div class="ms-4 text-center">
 <br>
 <% if (user) { %>
 <h2>Welcome back, <%= user.email %>!</h2>
@@ -15,8 +16,9 @@
 <form method="GET" action="/drugs/results">
 <label for="drug-search">Search for a drug:</label>
 <input id="drug-search" placeholder="Type a drug name" name="drug">
-<button type="submit">Search</button>
+<button class="btn btn-outline-success" type="submit">Search</button>
 </form>
+</div>
 </div>
 
 <%-include('partials/footer.ejs') %>

@@ -4,46 +4,60 @@
 <div class="vh-min-100 d-flex flex-wrap justify-content-around">
 
 <% allFaves.forEach(drug => { %>
+    
+    <!-- DISPLAY EACH FAVORITED DRUG -->
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title bg-info p-4"><a class="text-light" href="/drugs/<%=drug.api_id %>"><%=drug.brand_name%></a></h5>
+          <button class="btn btn-info btn-lg d-grid col-11 mx-auto text-center card-title p-4"><a class="text-light text-uppercase text-decoration-none" href="/drugs/<%=drug.api_id %>"><%=drug.brand_name%></a></button>
+
+        <!-- DISPLAY NICKNAME IF APPLICABLE -->
           <% if (drug.nickname) { %>
-          <h6 class="card-subtitle mb-2 text-muted">Nickname: "<%=drug.nickname%>"</h6> <%}%>
+          <h6 class="card-subtitle mb-2 text-muted text-center">Nickname: "<%=drug.nickname%>"</h6> <%}%>
 
-        <form class="card-link" method="POST" action="/favorites/?_method=DELETE">
-            <button class="btn btn-outline-danger" type="submit" value="<%=drug.id%>" name="drugId">Delete</button>
-        </form>
-
-        <% if (! drug.nickname) { %>
+        
+        <!-- SET NICKNAME OPTION-->
+          <% if (! drug.nickname) { %>
             <form method="POST" action="/favorites/?_method=PUT">
-               <label for="type">Set nickname:</label>
-               <input hidden value="<%=drug.id%>" name="drugId">
-               <input id="type" type="text" value="<%=drug.nickname%>" name="nickname">
-               <button type="submit">Save</button>
-           </form> <%}%>
-           <div class="card-text">
-            <br>
-           <p><strong>Comments:</strong></p>
-           <% if (drug.comments.length == 0) { %>
-                <p>No comments yet!</p>
-           <% } else { %>
-            <% drug.dataValues.comments.forEach(function(comment) { %>
-                <p> <%=comment.user.email%> says:</p>
-                <p><%= comment.content %></p>
-             <% })} %>
-    
-             <p><strong>Leave a comment:</strong></p>
+                <label for="type">Set nickname:</label>
+                <input hidden value="<%=drug.id%>" name="drugId">
+                <input id="type" type="text" value="<%=drug.nickname%>" name="nickname">
+                <button type="submit">Save</button>
+            </form> <%}%>
+            <div class="card-text">
+
+                <br>
+            <!-- COMMENTS SECTION -->
+                <p class="fw-bold">Comments:</p>
+                <% if (drug.comments.length == 0) { %>
+                    <p>No comments yet!</p>
+                    <% } else { %>
+                        <% drug.dataValues.comments.forEach(function(comment) { %>
+                            <p> <%=comment.user.email%> says:</p>
+                            <p class="ms-4 fst-italic fw-lighter"><%= comment.content %></p>
+                            <% })} %>
+                    
+            <!-- POST A NEW COMMENT -->
+                <p><strong>Leave a comment:</strong></p>
                 <form method="POST" action="/favorites/comment">
                     <input hidden type="text" value="<%=user.id%>" name="userId"/>
                     <input hidden type="text" value="<%=drug.id%>" name="drugId"/>
                     <input type="text" placeholder="Write your comment" name="content"/>
                     <button class="btn btn-outline-success" type="submit">Submit</button>
                 </form>
+
+                <br>
+            
+            <!-- DELETE BUTTON -->
+                <form class="card-link" method="POST" action="/favorites/?_method=DELETE">
+                    <button class="btn btn-outline-danger" type="submit" value="<%=drug.id%>" name="drugId">Delete Favorite</button>
+                </form>
+
             </div>
 
         </div>
       </div>
         <%})%>
-</div>
+    </div>
+    <button class="ms-2 btn btn-outline-primary" type="submit" ><a class="text-dark" href="/">&larr; Back to Search</a></button>
 
 <%-include('./partials/footer.ejs') %>
