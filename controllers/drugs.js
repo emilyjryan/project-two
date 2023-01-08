@@ -42,14 +42,32 @@ router.get('/:id', async (req,res) => {
     const agent = new https.Agent({  
       rejectUnauthorized: false
     });
-    // console.log(req.params)
     const drugURL = `https://api.fda.gov/drug/label.json?search=id:${req.params.id}`
-    // console.log(req.params)
     const response = await axios.get(drugURL, {httpsAgent: agent});
-    // res.json(response.data)
-    res.render('./drugs/detail.ejs', {
-      drug: response.data.results[0]
+    // const [drug, create] = await db.drug.findOrCreate({
+    //   where: {
+    //     brand_name: req.body.brand_name
+    //   },
+    //   defaults: {
+    //       generic_name: req.body.generic_name,
+    //       route: req.body.route,
+    //       active_ingredient: req.body.active_ingredient,
+    //       dosage: req.body.dosage,
+    //       indications_and_usage: req.body.indications_and_usage,
+    //       caution: req.body.caution,
+    //       ask_doctor: req.body.ask_doctor,
+    //       api_id: req.body.api_id
+    //   }
+    // })
+    // if (!create){
+      res.render('./drugs/detail.ejs', {
+        drug: response.data.results[0],
+        comments: response.data.results[0].comments
+      //})
     })
+    // else {
+    //   res.send("No comments yet")
+    // }
     user: res.locals.user
   } catch(error) {
     // console.log specifics of the error but keep them private)

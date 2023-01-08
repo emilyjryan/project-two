@@ -146,19 +146,51 @@ app.delete('/favorites', async (req,res) => {
 
  app.post('/favorites/comment', async (req, res) => {
     try {
-      const [newComment, post] = await db.comment.findOrCreate({
+      const [drug, create] = await db.drug.findOrCreate({
+        where: {
+          brand_name: req.body.brand_name
+        },
+        defaults: {
+            generic_name: req.body.generic_name,
+            route: req.body.route,
+            active_ingredient: req.body.active_ingredient,
+            dosage: req.body.dosage,
+            indications_and_usage: req.body.indications_and_usage,
+            caution: req.body.caution,
+            ask_doctor: req.body.ask_doctor,
+            api_id: req.body.api_id
+        }
+      })
+
+      const [Newcomment, makeNew] = await db.comment.findOrCreate({
         where: {
           content: req.body.content,
-          userId: req.body.userId,
-          drugId: req.body.drugId,
+          userId: res.locals.user.id,
+          drugId: drug.id,
         },
       })
-      res.redirect('/favorites')
+      res.redirect(`/drugs/${req.body.api_id}`)
     } catch (err) {
       console.log('error in comment post route', err)
       res.status(500).send('api error')
     }
   })
+
+//  app.post('/favorites/comment', async (req, res) => {
+//     try {
+//       const [newComment, post] = await db.comment.findOrCreate({
+//         where: {
+//           content: req.body.content,
+//           userId: req.body.userId,
+//           apiId: req.body.api_id,
+//         },
+//       })
+//       res.redirect('/favorites')
+//     } catch (err) {
+//       console.log('error in comment post route', err)
+//       res.status(500).send('api error')
+//     }
+//   })
 
 
 // ===== CONTROLLERS ===== //

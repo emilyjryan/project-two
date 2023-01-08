@@ -26,26 +26,6 @@
             <div class="card-text">
 
                 <br>
-            <!-- COMMENTS SECTION -->
-                <p class="fw-bold">Comments:</p>
-                <% if (drug.comments.length == 0) { %>
-                    <p>No comments yet!</p>
-                    <% } else { %>
-                        <% drug.dataValues.comments.forEach(function(comment) { %>
-                            <p> <%=comment.user.email%> says:</p>
-                            <p class="ms-4 fst-italic fw-lighter"><%= comment.content %></p>
-                            <% })} %>
-                    
-            <!-- POST A NEW COMMENT -->
-                <p><strong>Leave a comment:</strong></p>
-                <form method="POST" action="/favorites/comment">
-                    <input hidden type="text" value="<%=user.id%>" name="userId"/>
-                    <input hidden type="text" value="<%=drug.id%>" name="drugId"/>
-                    <input type="text" placeholder="Write your comment" name="content"/>
-                    <button class="btn btn-outline-success" type="submit">Submit</button>
-                </form>
-
-                <br>
             
             <!-- DELETE BUTTON -->
                 <form class="card-link" method="POST" action="/favorites/?_method=DELETE">
