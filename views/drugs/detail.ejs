@@ -1,9 +1,12 @@
 <%-include('../partials/header.ejs', { user}) %>
     <br>
-    <button class="ms-4 btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/">&larr; Back to Search</a></button>    
+
+    <button class="ms-4 btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/">&larr; Back to Search</a></button> 
 
     <br>
-    <br>
+
+    <!-- DRUG DETAILS -->
+
     <div class="ms-4">
         <h2><strong>Brand name: </strong><%=drug.openfda.brand_name%></h2>
         <p><strong>Generic name: </strong><%=drug.openfda.generic_name%></p>
@@ -13,8 +16,8 @@
         <p><strong>Indications and Usage: </strong><%=drug.indications_and_usage%></p>
         <p><strong class="text-danger"> ‼️ ⛔️ CAUTION ⛔️ !! </strong><%=drug.do_not_use%>. <%=drug.ask_doctor%>.</p>
 
+    <!-- FAVORITES BUTTON FOR LOGGED IN USERS -->
 
-        <!-- Favorites button for logged in users -->
         <% if (user) { %>
             <form method="POST" action="/favorites">
                 <input hidden type="text" value="<%=drug.openfda.brand_name%>" name="brand_name"/>
@@ -32,7 +35,7 @@
             <br>
             <%}%>
 
-             <!-- COMMENTS SECTION -->
+    <!-- COMMENTS SECTION -->
 
              <%if (foundDrug) {%>
              <p class="fw-bold">Comments:</p>
@@ -44,7 +47,8 @@
                    <p class="ms-4 fst-italic fw-lighter"><%= comment.content %></p>
                    <% })}} %>
                  
-         <!-- POST A NEW COMMENT -->
+    <!-- POST A NEW COMMENT -->
+
              <p><strong>Leave a comment:</strong></p>
              <form method="POST" action="/favorites/comment">
                 <input hidden type="text" value="<%=drug.openfda.brand_name%>" name="brand_name"/>
@@ -61,12 +65,8 @@
                  <input type="text" placeholder="Write your comment" name="content"/>
                  <button class="btn btn-outline-success" type="submit">Submit</button>
              </form>
-
              <br>
-
          </div>
-
-       
     </div>
 
 <%-include('../partials/footer.ejs') %>

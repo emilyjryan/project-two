@@ -10,7 +10,7 @@ const app = express()
 const https = require('https')
 app.use(methodOverride('_method'))
 
-
+// ===== // ===== DRUG CONTROLLER ===== // ===== //
 
 // GET /drugs/results -- sends results of input search to /results
 router.get('/results', async (req,res) => {

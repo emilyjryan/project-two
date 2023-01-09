@@ -27,9 +27,7 @@ try {
         const decryptedId = crypto.AES.decrypt(req.cookies.userId, process.env.SECRET)
         const decryptedString = decryptedId.toString(crypto.enc.Utf8)
         // the user is logged in, let's find them in the db
-        const user = await db.user.findByPk(decryptedString, {
-          include: [db.comment, db.drug]
-        })
+        const user = await db.user.findByPk(decryptedString)
         // mount the logged in user on the res.locals
         res.locals.user = user
     } else {
@@ -107,17 +105,9 @@ app.post('/favorites', async (req, res) => {
             caution: req.body.caution,
             ask_doctor: req.body.ask_doctor,
             api_id: req.body.api_id,
-            // favorite: req.body.favorite
         },
     })
 
-    // if (!create) {
-    //   req.body.favorite = true
-    //   await db.drug.update(req.body, {
-    //     where: {
-    //       api_id: req.body.api_id,
-    //   })
-    // }}
       await fave.addUser(res.locals.user.id)
         res.redirect('/favorites')
 
@@ -129,6 +119,7 @@ app.post('/favorites', async (req, res) => {
   })
 
   // DELETE a favorite drug
+
 app.delete('/favorites', async (req,res) => {
   try {
     const user = await db.user.findByPk(res.locals.user.id)
@@ -142,6 +133,7 @@ app.delete('/favorites', async (req,res) => {
 })
 
  // PUT/Change the nickname of a favorite drug
+
  app.put('/favorites', async (req,res) => {
   try {
     const user = await db.user.findByPk(res.locals.user.id)
@@ -156,7 +148,9 @@ app.delete('/favorites', async (req,res) => {
  } 
 })
 
-// ===== COMMENTS ===== //
+// ===== // ===== // COMMENTS // ===== // ===== //
+
+// POST a new comment
 
  app.post('/favorites/comment', async (req, res) => {
     try {
@@ -190,28 +184,10 @@ app.delete('/favorites', async (req,res) => {
     }
   })
 
-//  app.post('/favorites/comment', async (req, res) => {
-//     try {
-//       const [newComment, post] = await db.comment.findOrCreate({
-//         where: {
-//           content: req.body.content,
-//           userId: req.body.userId,
-//           apiId: req.body.api_id,
-//         },
-//       })
-//       res.redirect('/favorites')
-//     } catch (err) {
-//       console.log('error in comment post route', err)
-//       res.status(500).send('api error')
-//     }
-//   })
-
-
 // ===== CONTROLLERS ===== //
 
 app.use('/users', require('./controllers/users'))
 app.use('/drugs', require('./controllers/drugs'))
-
 
 // ===== PORT ===== //
 
