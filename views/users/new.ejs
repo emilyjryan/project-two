@@ -1,13 +1,13 @@
 <%-include('../partials/header.ejs', { user }) %>
 
 <br>
-<h3 class="ms-4">Sign up for an account!</h3>
+<h3 class="text-center">Sign up for an account!</h3>
 <br>
 
-<form class="ms-4" action="/users" method="POST">
-    <label for="email">Email:</label>
+<form class="text-center" action="/users" method="POST">
+    <label class="text-center" for="email">Email:</label>
     <input id="email" type="email" name="email" required/>
-
+    <br>
     <label for="password">Password:</label>
     <input id="password" type="password" name="password" required/>
 

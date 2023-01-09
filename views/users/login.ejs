@@ -10,11 +10,17 @@
 <form class="ms-4" action="/users/login" method="POST">
     <label for="email">Email:</label>
     <input id="email" type="email" name="email" required/>
-
+    <br>
     <label for="password">Password:</label>
     <input id="password" type="password" name="password" required/>
 
-    <button type="submit">Login</button>
+    <button class="btn btn-outline-success" type="submit">Login</button>
 </form>
+
+<br>
+<h4 class="ms-4">Don't have an account?</h4>
+<br>
+
+<button class="ms-4 btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/users/new">Sign Up</a></button>
 
 <%-include('../partials/footer.ejs') %>
