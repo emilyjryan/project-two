@@ -56,7 +56,6 @@ router.get('/:id', async (req,res) => {
           db.user]
         }]
       })
-      console.log(foundDrug.comments)
 
     res.render ('./drugs/detail.ejs', {
       drug: response.data.results[0],

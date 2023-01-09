@@ -34,14 +34,16 @@
             <%}%>
 
              <!-- COMMENTS SECTION -->
+
+             <%if (foundDrug) {%>
              <p class="fw-bold">Comments:</p>
-             <% if (foundDrug.comments) { %>
+             <% if (foundDrug.comments.length == 0) { %>
+                <p>No comments yet!</p> 
+                <%} else { %>
                 <% foundDrug.comments.forEach(function(comment) { %>
                    <p> <%=comment.user.email%> says:</p>
-                   <p class="ms-4 fst-italic fw-lighter"><%= comment.dataValues.content %></p>
-                   <% }) %>
-                 <%} else { %>
-                    <p>No comments yet!</p> <%}%>
+                   <p class="ms-4 fst-italic fw-lighter"><%= comment.content %></p>
+                   <% })}} %>
                  
          <!-- POST A NEW COMMENT -->
              <p><strong>Leave a comment:</strong></p>
