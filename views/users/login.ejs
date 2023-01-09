@@ -1,26 +1,28 @@
 <%-include('../partials/header.ejs') %>
 
 <br>
-<h3 class="ms-4">Log in to your account</h3>
+<h3 class="text-center">Log in to your account</h3>
 
 <% if (message) { %>
     <p class="ms-4"><%=message%></p>
 <% } %>
 <br>
-<form class="ms-4" action="/users/login" method="POST">
+<form class="text-center" action="/users/login" method="POST">
     <label for="email">Email:</label>
     <input id="email" type="email" name="email" required/>
     <br>
     <label for="password">Password:</label>
     <input id="password" type="password" name="password" required/>
-
+    <br>
+    <br>
     <button class="btn btn-outline-success" type="submit">Login</button>
 </form>
 
 <br>
-<h4 class="ms-4">Don't have an account?</h4>
+<h4 class="text-center">Don't have an account?</h4>
 <br>
-
-<button class="ms-4 btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/users/new">Sign Up</a></button>
+<div class="text-center">
+<button class="btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/users/new">Sign Up</a></button>
+</div>
 
 <%-include('../partials/footer.ejs') %>
