@@ -45,13 +45,22 @@ router.get('/:id', async (req,res) => {
     const drugURL = `https://api.fda.gov/drug/label.json?search=id:${req.params.id}`
     const response = await axios.get(drugURL, {httpsAgent: agent});
 
-    const [drug, create] = await db.drug.findAll({
+    console.log(response.data.results[0].id)
+    const foundDrug= await db.drug.findOne({
       where: {
-        drug: response.data.results[0]}
+        api_id: response.data.results[0].id
+      },
+      include: [{
+        model:db.comment,
+        include: [
+          db.user]
+        }]
       })
+      console.log(foundDrug.comments)
 
     res.render ('./drugs/detail.ejs', {
-      drug: response.data.results[0]
+      drug: response.data.results[0],
+      foundDrug: foundDrug
     })
 
     // const [drug, create] = await db.drug.findOrCreate({
