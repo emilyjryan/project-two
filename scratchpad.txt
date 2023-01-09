@@ -43,13 +43,16 @@ STILL TO DO:
 - rework routes semantics
 - conditional rendering for each attribute on details page
 - search bar within favs?
-- navigation buttons on each page
 - add time stamp for comments
 
-QUESTIONS:
-- how to PUT the nickname?
-- where vs. defaults in findOrCreate
 
+PRESENTATION:
 
+Overview your project and your mvp/stretch goals.
+Demo of functionality from the deployment.
+Are there any roadblocks/bugs you hit and how did you solved them?
+Are there any parts of code you are particularly proud of?
+What are your biggest take-aways/biggest things your learned over the course of this project?
+What are you future plans for the project?
 
 
