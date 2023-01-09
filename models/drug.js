@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     caution: DataTypes.TEXT,
     ask_doctor: DataTypes.TEXT,
     api_id: DataTypes.STRING,
-    favorite: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'drug',
