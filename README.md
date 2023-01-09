@@ -60,6 +60,7 @@ I started this project by making sure the API I chose (FDA) was going to be easy
 - User can sign up for account using email and password
 - User can search drug by name (generic or trade) and have requested information returned
 - User can save their searches in "favorites" for future use
+- User can delete a favorite from their list
 - User can update "nickname" for a favorited drug
 - User can comment on a given drug regarding side effects (or other comments about the drug)
 

@@ -4,7 +4,7 @@
     <button class="ms-4 btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/">&larr; Back to Search</a></button> 
 
     <br>
-    <br>
+    <br
 
     <!-- DRUG DETAILS -->
 
@@ -49,7 +49,8 @@
                    <% })}} %>
                  
     <!-- POST A NEW COMMENT -->
-
+            
+        <%if (user) {%>
              <p><strong>Leave a comment:</strong></p>
              <form method="POST" action="/favorites/comment">
                 <input hidden type="text" value="<%=drug.openfda.brand_name%>" name="brand_name"/>
@@ -65,7 +66,13 @@
                  <input hidden type="text" value="<%=user.id%>" name="userId"/>
                  <input type="text" placeholder="Write your comment" name="content"/>
                  <button class="btn btn-outline-success" type="submit">Submit</button>
-             </form>
+             </form>   
+             <%} else {%>
+                <h6>Want to leave a comment?</h6>
+                <div>
+                <button class="btn btn-outline-primary" type="submit" ><a class="text-dark text-decoration-none" href="/users/new">Sign up for an account</a></button>
+                </div>      
+                <%}%>
              <br>
          </div>
     </div>
