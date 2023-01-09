@@ -27,7 +27,9 @@ try {
         const decryptedId = crypto.AES.decrypt(req.cookies.userId, process.env.SECRET)
         const decryptedString = decryptedId.toString(crypto.enc.Utf8)
         // the user is logged in, let's find them in the db
-        const user = await db.user.findByPk(decryptedString)
+        const user = await db.user.findByPk(decryptedString, {
+          include: [db.comment, db.drug]
+        })
         // mount the logged in user on the res.locals
         res.locals.user = user
     } else {
@@ -77,6 +79,7 @@ app.get('/favorites', async (req, res) => {
           ]
         }]
       })
+      console.log(res.locals.user)
       // res.send(allFaves)
       res.render('faves.ejs', {
         allFaves: allFaves,
@@ -103,11 +106,22 @@ app.post('/favorites', async (req, res) => {
             indications_and_usage: req.body.indications_and_usage,
             caution: req.body.caution,
             ask_doctor: req.body.ask_doctor,
-            api_id: req.body.api_id
+            api_id: req.body.api_id,
+            // favorite: req.body.favorite
         },
     })
-    await fave.addUser(res.locals.user.id)
-      res.redirect('/favorites')
+
+    // if (!create) {
+    //   req.body.favorite = true
+    //   await db.drug.update(req.body, {
+    //     where: {
+    //       api_id: req.body.api_id,
+    //   })
+    // }}
+      await fave.addUser(res.locals.user.id)
+        res.redirect('/favorites')
+
+
     } catch (err) {
       console.log('error in the post to favorites route', err)
       res.status(500).send('api error')

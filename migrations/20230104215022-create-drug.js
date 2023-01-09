@@ -39,6 +39,10 @@ module.exports = {
       api_id: {
         type: Sequelize.STRING
       },
+      favorite: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
